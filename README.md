@@ -60,13 +60,11 @@ View ID names (`android:id` in XML) should be all lowercase with underscores sep
     android:id="@+id/dance_moves"
     />
 ```
-
-When using [Kotlin Android Extensions] to provide synthetic view properties, use the `as` keyword on [imports] to name
-properties according to [non-constant names Android Kotlin codestyle]. The name should be [camel case], postfixed with
-it's view type:
+The name should be [snake case].  Do your best to create a name that contains an underscore so it is distinguishable from local variables.  If a name cannot be created with an underscore, then postfix [_view] at the end.
 
 ```kotlin
-import kotlinx.android.synthetic.main.scan.dance_moves as danceMovesRecyclerView
+import kotlinx.android.synthetic.main.scan.dance_moves
+import kotlinx.android.synthetic.main.scan.login as login_view
 ```
 
 # License
