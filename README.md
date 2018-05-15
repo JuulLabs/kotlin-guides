@@ -53,7 +53,7 @@ val ipAddr = "127.0.0.1" // WRONG!
 
 ### View IDs
 
-View ID names (`android:id` in XML) should be all lowercase with underscores separating words (snake_case).  Do your best to create a name that contains an underscore so it is distinguishable from local variables.  If a name cannot be created with an underscore, then postfix [_view] at the end.
+View ID names (`android:id` in XML) should be all lowercase with underscores separating words (snake_case).  Do your best to create a name that contains an underscore so it is distinguishable from local variables. 
 
 ```xml
 <android.support.v7.widget.RecyclerView
@@ -64,6 +64,10 @@ View ID names (`android:id` in XML) should be all lowercase with underscores sep
     android:id="@+id/login"
     />
 ```
+
+When using [Kotlin Android Extensions] to provide synthetic view properties, use the `as` keyword on [imports] to name
+properties that do not have an underscore in their name, and append `_view` to the end
+
 
 ```kotlin
 import kotlinx.android.synthetic.main.scan.dance_moves
