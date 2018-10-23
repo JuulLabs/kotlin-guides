@@ -69,6 +69,25 @@ it's view type:
 import kotlinx.android.synthetic.main.scan.dance_moves as danceMovesRecyclerView
 ```
 
+## Coroutines
+
+### `suspend` vs `CoroutineScope`
+
+Per [Kotlin Coroutines in Practice by Roman Elizarov], the following conventions are recommended:
+
+| Paradigm                  | Usage                                                              |
+|---------------------------|--------------------------------------------------------------------|
+| `suspend`                 | Does something long & waits for it to complete without blocking.   |
+| `CoroutineScope` function | Launches new Coroutines & quickly returns, does not wait for them. |
+
+```kotlin
+// Does not return until it (and it's children) are done.
+suspend fun downloadContent(location: Location): Content
+
+// Launches Coroutines and returns immediately.
+fun CoroutineScope.processReferences(...)
+```
+
 # License
 
 [![Creative Commons License](https://i.creativecommons.org/l/by/4.0/80x15.png)](http://creativecommons.org/licenses/by/4.0/)
@@ -80,3 +99,4 @@ This work is licensed under a [Creative Commons Attribution 4.0 International Li
 [imports]: https://kotlinlang.org/docs/reference/packages.html#imports
 [non-constant names Android Kotlin codestyle]: https://android.github.io/kotlin-guides/style.html#non-constant-names
 [camel case]: https://google.github.io/styleguide/javaguide.html#s5.3-camel-case
+[Kotlin Coroutines in Practice by Roman Elizarov]: https://youtu.be/a3agLJQ6vt8?t=2160
