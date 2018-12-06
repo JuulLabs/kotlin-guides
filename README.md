@@ -64,6 +64,8 @@ View ID names (`android:id` in XML) should be all lowercase with underscores sep
 
 ```kotlin
 import kotlinx.android.synthetic.main.scan.dance_moves
+import kotlinx.android.synthetic.main.scan.login_button
+import kotlinx.android.synthetic.main.scan.root_view
 ```
 
 # License
