@@ -53,7 +53,7 @@ val ipAddr = "127.0.0.1" // WRONG!
 
 ### View IDs
 
-View ID names (`android:id` in XML) should be all lowercase with underscores separating words (snake_case).  It is required that every name will have at least one underscore that way it is distinguishable from local variables. In instances were it proves difficult, then as a last resort, it should be fine to postfix the name with the component type (e.g. _button or _view).
+View ID names (`android:id` in XML) should be all lowercase with underscores separating words (snake_case). It is required that every name have at least one underscore to distinguish it from local variables. In instances were it proves difficult, then name may be postfixed with the component type (e.g. `_button` or `_view`).
 
 ```xml
 <android.support.v7.widget.RecyclerView
