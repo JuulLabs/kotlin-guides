@@ -3,9 +3,9 @@
 Code styles shall be adhered to in the following order (whereas their precedence follows the order listed and subsequent
 guides can be used as fall back if the previous does not cover a specific topic):
 
-1. [Android Kotlin Guides](https://android.github.io/kotlin-guides/style.html)
-2. [JetBrain's Kotlin Coding Conventions](https://kotlinlang.org/docs/reference/coding-conventions.html)
-3. This Guide
+1. This Guide
+2. [Android Kotlin Guides](https://android.github.io/kotlin-guides/style.html)
+3. [JetBrain's Kotlin Coding Conventions](https://kotlinlang.org/docs/reference/coding-conventions.html)
 
 ## Naming
 
