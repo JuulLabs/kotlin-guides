@@ -11,30 +11,50 @@ guides can be used as fall back if the previous does not cover a specific topic)
 
 ### Variables
 
-Variable names should be named to remove ambiguity. In general, including a variable's type in it's name is overly
-verbose, unless it provides necessary clarity. For example, a list of locations (`List<Location>`) could appropriately
-be named `locations` (by virtue of being plural, it implies that the variable is likely a `Collection`).
+Variable names should be named to remove ambiguity. In general, including a variable's type in it's
+name is overly verbose, unless it provides necessary clarity. For example, a list of locations
+(`List<Location>`) would appropriately be named `locations` (by virtue of being plural, it implies
+that the variable is likely a `Collection`).
 
-Conversely, a property of type `LiveData<List<Location>>` would be appropriately named to include it's type in it's
-name (`locationsLiveData`). This helps to avoid confusion, as `val locations` is an unchanging reference to a collection
-of objects of type `Location`, while it would be useful to differentiate a property of type `LiveData<List<Location>>`
-as _also_ being an unchanging reference _but_ able to emit multiple `List<Location>` collections.
+#### Data Streams
+
+Data streams (e.g. `Flow`, `Observable` or `LiveData`) shall be named to describe the data flowing
+through them. For example, a data stream of singular color values (e.g. `Flow<Color>`) should be
+named `color`. For data streams of `Collections` (e.g. `Flow<List<Color>>`) they should take the
+plural form (e.g. `colors`).
+
+| Type                       | Naming   | Example Type        | Example Naming |
+|----------------------------|----------|---------------------|----------------|
+| Single value variable      | Singular | `Color`             | `color`        |
+| Collection                 | Plural   | `List<Color>`       | `colors`       |
+| Data flow of single values | Singular | `Flow<Color>`       | `color`        |
+| Data flow of collections   | Plural   | `Flow<List<Color>>` | `colors`       |
+
+Instances where naming would conflict (when you have a variable to hold a single value of the same
+type as a data flow, e.g. `Color` and `Flow<Color>`) the naming precedence shall follow the ordering
+of the table above, with the lower precedence being postfixed with it's type.
+
+Precedence of data flow types is as follows:
+
+- `Flow`
+- `Observable`
+- `LiveData`
 
 ```kotlin
-val colors = listOf(Color.RED, Color.GREEN, Color.BLUE) // Okay
+interface Example {
+    val color: Color
+    val colorFlow: Flow<Color> // Okay for resolving conflict with variable above it.
+}
 ```
 
 ```kotlin
-val color: LiveData<Color> // Discouraged
-
-val colorLiveData: LiveData<Color> // Okay
+interface Example {
+    val color: Flow<Color>
+    val colorLiveData: LiveData<Color> // Okay for resolving conflict with variable above it.
+}
 ```
 
-```kotlin
-val color: Observable<Color> // Discouraged
-
-val colorObservable: Observable<Color> // Okay
-```
+#### Abbreviations
 
 Abbreviations in variable names are strongly discouraged. Acronyms may be used if they are standard nomenclature
 (commonly used in place of their longhand counterparts).
