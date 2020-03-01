@@ -18,7 +18,7 @@ that the variable is likely a `Collection`).
 
 #### Data Streams
 
-Data streams (e.g. `Flow`, `Observable` or `LiveData`) shall be named to describe the data flowing
+Data streams (e.g. `Flow`, `Channel` or `LiveData`) shall be named to describe the data flowing
 through them. For example, a data stream of singular color values (e.g. `Flow<Color>`) should be
 named `color`. For data streams of `Collections` (e.g. `Flow<List<Color>>`) they should take the
 plural form (e.g. `colors`).
@@ -30,27 +30,37 @@ plural form (e.g. `colors`).
 | Data flow of single values | Singular | `Flow<Color>`       | `color`        |
 | Data flow of collections   | Plural   | `Flow<List<Color>>` | `colors`       |
 
-Instances where naming would conflict (when you have a variable to hold a single value of the same
-type as a data flow, e.g. `Color` and `Flow<Color>`) the naming precedence shall follow the ordering
-of the table above, with the lower precedence being postfixed with it's type.
+Instances where naming would conflict (when you have a property to hold a single value of the same
+type as a property referencing a data flow, e.g. `Color` and `Flow<Color>`) the naming precedence
+shall follow the ordering of the table above, with the lower precedence being postfixed with it's
+type.
 
-Precedence of data flow types is as follows:
+When you have naming conflicts with multiple data flow properties, their naming precedence is as
+follows:
 
 - `Flow`
-- `Observable`
+- `Channel`
 - `LiveData`
 
 ```kotlin
 interface Example {
-    val color: Color
-    val colorFlow: Flow<Color> // Okay for resolving conflict with variable above it.
+    val color: Color // Single value property takes precedence over data flow properties.
+    val colorFlow: Flow<Color> // Name postfixed with type to resolve naming conflict.
 }
 ```
 
 ```kotlin
 interface Example {
-    val color: Flow<Color>
-    val colorLiveData: LiveData<Color> // Okay for resolving conflict with variable above it.
+    val color: Flow<Color> // Flow takes precedence over LiveData.
+    val colorLiveData: LiveData<Color> // Naming of LiveData property is postfixed to resolve naming conflict.
+}
+```
+
+```kotlin
+interface Example {
+    val color: Color
+    val colorFlow: Flow<Color>
+    val colorLiveData: LiveData<Color>
 }
 ```
 
@@ -73,7 +83,11 @@ val ipAddr = "127.0.0.1" // WRONG!
 
 ### View IDs
 
-View ID names (`android:id` in XML) should be all lowercase with underscores separating words (snake_case). It is required that every name have at least one underscore to distinguish it from local variables. In instances were it proves difficult, then name may be postfixed with the component type (e.g. `_button` or `_view`).
+When Kotlin extensions are used (and view IDs are made available via `import`), view ID names
+(`android:id` in XML) should be all lowercase with underscores separating words (snake_case). It is
+required that every name have at least one underscore to distinguish it from local variables. In
+instances were it proves difficult, then name may be postfixed with the component type
+(e.g. `_button` or `_view`).
 
 ```xml
 <android.support.v7.widget.RecyclerView
