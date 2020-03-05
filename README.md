@@ -11,30 +11,60 @@ guides can be used as fall back if the previous does not cover a specific topic)
 
 ### Variables
 
-Variable names should be named to remove ambiguity. In general, including a variable's type in it's name is overly
-verbose, unless it provides necessary clarity. For example, a list of locations (`List<Location>`) could appropriately
-be named `locations` (by virtue of being plural, it implies that the variable is likely a `Collection`).
+Variable names should be named to remove ambiguity. In general, including a variable's type in it's
+name is overly verbose, unless it provides necessary clarity. For example, a list of locations
+(`List<Location>`) would appropriately be named `locations` (by virtue of being plural, it implies
+that the variable is likely a `Collection`).
 
-Conversely, a property of type `LiveData<List<Location>>` would be appropriately named to include it's type in it's
-name (`locationsLiveData`). This helps to avoid confusion, as `val locations` is an unchanging reference to a collection
-of objects of type `Location`, while it would be useful to differentiate a property of type `LiveData<List<Location>>`
-as _also_ being an unchanging reference _but_ able to emit multiple `List<Location>` collections.
+#### Data Streams
+
+Data streams (e.g. `Flow`, `Channel` or `LiveData`) shall be named to describe the data flowing
+through them. For example, a data stream of singular color values (e.g. `Flow<Color>`) should be
+named `color`. For data streams of `Collections` (e.g. `Flow<List<Color>>`) they should take the
+plural form (e.g. `colors`).
+
+| Type                       | Naming   | Example Type        | Example Naming |
+|----------------------------|----------|---------------------|----------------|
+| Single value variable      | Singular | `Color`             | `color`        |
+| Collection                 | Plural   | `List<Color>`       | `colors`       |
+| Data flow of single values | Singular | `Flow<Color>`       | `color`        |
+| Data flow of collections   | Plural   | `Flow<List<Color>>` | `colors`       |
+
+Instances where naming would conflict (when you have a property to hold a single value of the same
+type as a property referencing a data flow, e.g. `Color` and `Flow<Color>`) the naming precedence
+shall follow the ordering of the table above, with the lower precedence being postfixed with it's
+type.
+
+When you have naming conflicts with multiple data flow properties, their naming precedence is as
+follows:
+
+- `Flow`
+- `Channel`
+- `LiveData`
 
 ```kotlin
-val colors = listOf(Color.RED, Color.GREEN, Color.BLUE) // Okay
+interface Example {
+    val color: Color // Single value property takes precedence over data flow properties.
+    val colorFlow: Flow<Color> // Name postfixed with type to resolve naming conflict.
+}
 ```
 
 ```kotlin
-val color: LiveData<Color> // Discouraged
-
-val colorLiveData: LiveData<Color> // Okay
+interface Example {
+    val color: Flow<Color> // Flow takes precedence over LiveData.
+    val colorLiveData: LiveData<Color> // Naming of LiveData property is postfixed to resolve naming conflict.
+}
 ```
 
 ```kotlin
-val color: Observable<Color> // Discouraged
-
-val colorObservable: Observable<Color> // Okay
+interface Example {
+    val color: Color
+    val colorFlow: Flow<Color>
+    val colorLiveData: LiveData<Color>
+}
 ```
+
+#### Abbreviations
 
 Abbreviations in variable names are strongly discouraged. Acronyms may be used if they are standard nomenclature
 (commonly used in place of their longhand counterparts).
@@ -53,7 +83,11 @@ val ipAddr = "127.0.0.1" // WRONG!
 
 ### View IDs
 
-View ID names (`android:id` in XML) should be all lowercase with underscores separating words (snake_case). It is required that every name have at least one underscore to distinguish it from local variables. In instances were it proves difficult, then name may be postfixed with the component type (e.g. `_button` or `_view`).
+When Kotlin extensions are used (and view IDs are made available via `import`), view ID names
+(`android:id` in XML) should be all lowercase with underscores separating words (snake_case). It is
+required that every name have at least one underscore to distinguish it from local variables. In
+instances were it proves difficult, then name may be postfixed with the component type
+(e.g. `_button` or `_view`).
 
 ```xml
 <android.support.v7.widget.RecyclerView
