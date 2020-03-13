@@ -81,6 +81,17 @@ val ipAddress = "127.0.0.1" // Okay
 val ipAddr = "127.0.0.1" // WRONG!
 ```
 
+#### Feature Flags
+Boolean Feature Flags configured remotely should be named such that `true` coresponds to the feature being `enabled` and `false` is `disabled`.
+
+```kotlin
+val featureAbc = ExampleRemoteBoolean("feature_abc", true) // Okay, defaults to enabled
+
+val featureAbc = ExampleRemoteBoolean("feature_abc", false) // Okay, defaults to disabled
+
+val featureAbc = ExampleRemoteBoolean("feature_abc_disabled", true) // WRONG! true would result in feature being enabled
+```
+
 ### View IDs
 
 When Kotlin extensions are used (and view IDs are made available via `import`), view ID names
