@@ -113,6 +113,39 @@ import kotlinx.android.synthetic.main.scan.login_button
 import kotlinx.android.synthetic.main.scan.root_view
 ```
 
+## Nullability
+
+| Operation          | Usage ("When the value...")     | Throws                         |
+|--------------------|---------------------------------|--------------------------------|
+| [`!!`]             | is "known" to be non-`null`.    | [`KotlinNullPointerException`] |
+| [`checkNotNull`]   | is "expected" to be non-`null`. | [`IllegalStateException`]      |
+| [`requireNotNull`] | "must" not be `null`.           | [`IllegalArgumentException`]   |
+
+### `!!`
+
+The use of [`!!`] (double bang) operator is allowed but should be used sparingly. It should _only_
+be used when the value is **known** to never be `null` (but the compiler is unable to ascertain
+nullness), such as:
+
+- Type provided by Java code does not have nullability markers
+- Smart casting is not possible when accessing variable from another module
+
+When the reason for the `!!` usage is not immediately obvious, then a comment should be added with
+rationale for the `!!` usage.
+
+### `checkNotNull`
+
+`checkNotNull` should be used when a variable can be `null` but you are **not expecting** it to be.
+An example is having a nullable `var` that is inialized to `null` but is assigned a value at a later
+time. When accessing the `var` (and expecting the value to no longer be `null`) then `checkNotNull`
+should be used.
+
+### `requireNotNull`
+
+When you are provided a value (for example, as an argument of a function) to which it's nullness is
+unknown (e.g. Java type that is missing nullability markers) but value **must** not be `null`, then
+`requireNotNull` should be used.
+
 ## Coroutines
 
 ### `suspend` vs `CoroutineScope`
@@ -143,4 +176,10 @@ This work is licensed under a [Creative Commons Attribution 4.0 International Li
 [imports]: https://kotlinlang.org/docs/reference/packages.html#imports
 [non-constant names Android Kotlin codestyle]: https://android.github.io/kotlin-guides/style.html#non-constant-names
 [camel case]: https://google.github.io/styleguide/javaguide.html#s5.3-camel-case
+[`!!`]: https://kotlinlang.org/docs/reference/null-safety.html#the--operator
+[`KotlinNullPointerException`]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-kotlin-null-pointer-exception/
+[`checkNotNull`]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/check-not-null.html
+[`IllegalStateException`]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-illegal-state-exception/#kotlin.IllegalStateException
+[`requireNotNull`]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/require-not-null.html
+[`IllegalArgumentException`]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-illegal-argument-exception/#kotlin.IllegalArgumentException
 [Kotlin Coroutines in Practice by Roman Elizarov]: https://youtu.be/a3agLJQ6vt8?t=2160
