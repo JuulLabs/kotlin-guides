@@ -94,11 +94,7 @@ val featureAbc = ExampleRemoteBoolean("feature_abc_disabled", true) // WRONG! tr
 
 ### View IDs
 
-When Kotlin extensions are used (and view IDs are made available via `import`), view ID names
-(`android:id` in XML) should be all lowercase with underscores separating words (snake_case). It is
-required that every name have at least one underscore to distinguish it from local variables. In
-instances were it proves difficult, then name may be postfixed with the component type
-(e.g. `_button` or `_view`).
+View IDs (`android:id` in XML) should be all lowercase with underscores separating words ([snake_case]), for example:
 
 ```xml
 <android.support.v7.widget.RecyclerView
@@ -106,11 +102,18 @@ instances were it proves difficult, then name may be postfixed with the componen
     />
 ```
 
+View IDs should **not** be suffixed with the view type (e.g. `_button` or `_view`) unless needed to distinguish between
+two identically named views which differ only by their view type, for example:
 
-```kotlin
-import kotlinx.android.synthetic.main.scan.dance_moves
-import kotlinx.android.synthetic.main.scan.login_button
-import kotlinx.android.synthetic.main.scan.root_view
+```xml
+<TextView
+    android:id="@+id/username_label"
+    android:labelFor="@+id/username"
+    />
+
+<EditText
+    android:id="@+id/username"
+    />
 ```
 
 ## Nullability
@@ -183,3 +186,4 @@ This work is licensed under a [Creative Commons Attribution 4.0 International Li
 [`requireNotNull`]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/require-not-null.html
 [`IllegalArgumentException`]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-illegal-argument-exception/#kotlin.IllegalArgumentException
 [Kotlin Coroutines in Practice by Roman Elizarov]: https://youtu.be/a3agLJQ6vt8?t=2160
+[snake_case]: https://en.wikipedia.org/wiki/Snake_case
