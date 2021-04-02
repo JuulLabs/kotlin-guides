@@ -92,29 +92,9 @@ val featureAbc = ExampleRemoteBoolean("feature_abc", false) // Okay, defaults to
 val featureAbc = ExampleRemoteBoolean("feature_abc_disabled", true) // WRONG! true would result in feature being enabled
 ```
 
-### View IDs
+### Android Resources
 
-View IDs (`android:id` in XML) should be all lowercase with underscores separating words ([snake_case]), for example:
-
-```xml
-<android.support.v7.widget.RecyclerView
-    android:id="@+id/dance_moves"
-    />
-```
-
-View IDs should **not** be suffixed with the view type (e.g. `_button` or `_view`) unless needed to distinguish between
-two identically named views which differ only by their view type, for example:
-
-```xml
-<TextView
-    android:id="@+id/username_label"
-    android:labelFor="@+id/username"
-    />
-
-<EditText
-    android:id="@+id/username"
-    />
-```
+See [Android Resources](android-resources.md) document for resource ID naming conventions.
 
 ## Nullability
 
@@ -175,10 +155,6 @@ fun CoroutineScope.processReferences(...)
 This work is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
 
 
-[Kotlin Android Extensions]: https://kotlinlang.org/docs/tutorials/android-plugin.html
-[imports]: https://kotlinlang.org/docs/reference/packages.html#imports
-[non-constant names Android Kotlin codestyle]: https://android.github.io/kotlin-guides/style.html#non-constant-names
-[camel case]: https://google.github.io/styleguide/javaguide.html#s5.3-camel-case
 [`!!`]: https://kotlinlang.org/docs/reference/null-safety.html#the--operator
 [`KotlinNullPointerException`]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/-kotlin-null-pointer-exception/
 [`checkNotNull`]: https://kotlinlang.org/api/latest/jvm/stdlib/kotlin/check-not-null.html
